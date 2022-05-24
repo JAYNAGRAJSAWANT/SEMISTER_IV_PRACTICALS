@@ -1,0 +1,147 @@
+#include <iostream>
+using namespace std;
+
+class tree{
+    public:
+    int data;
+    tree*left;
+    tree*right;
+};
+
+class bst{
+    public:
+    tree*rootnode=NULL;
+    
+    void insertnode(int k){
+        tree*newnode=new tree;
+        newnode->data=k;
+        newnode->left=NULL;
+        newnode->right=NULL;
+        
+        if(rootnode==NULL){
+            rootnode=newnode;
+            cout<<"Root node Created."<<endl;
+        }
+        
+        else{
+            tree*temp=rootnode;
+            while(temp!=NULL){
+                if(newnode->data==temp->data){
+                    cout<<"Element already present ."<<endl;
+                    return;
+                }
+                
+                else if(temp->data>newnode->data && temp->left==NULL){
+                    temp->left=newnode;
+                    cout<<"Element inserted on left side."<<endl;
+                    break;
+                }
+                else if(temp->data>newnode->data){
+                    temp=temp->left;
+                }
+                
+                else if(temp->data<newnode->data && temp->right==NULL){
+                    temp->right=newnode;
+                    cout<<"Element inserted on right side."<<endl;
+                    break;
+                }
+                else if(temp->data<newnode->data){
+                    temp=temp->right;
+                }
+                
+            }
+        }
+        
+    }
+    
+    void search(int k){
+        tree *temp=rootnode;
+        if(rootnode==NULL){
+            cout<<"Tree is empty"<<endl;
+            return;
+        }
+        else{
+            while(temp!=NULL){
+                if(temp->data=k){
+                    cout<<k<<" is present in tree ."<<endl;
+                    return;
+                }
+                else if(temp->data>k){
+                    temp=temp->left;
+                }
+                else{
+                    temp=temp->right;
+                }
+            }
+            cout<<"Element is not present."<<endl;
+        }
+    }
+    
+    void preorder(tree *root){
+        if(root!=NULL){
+            cout<<root->data<<" ";
+            preorder(root->left);
+            preorder(root->right);
+        }
+    }
+    
+    void postorder(tree *root){
+        if(root!=NULL){
+            postorder(root->left);
+            postorder(root->right);
+            cout<<root->data<<" ";
+        }
+    }
+    
+    void inorder(tree *root){
+        if(root!=NULL){
+            inorder(root->left);
+            cout<<root->data<<" ";
+            inorder(root->right);
+        }
+    }
+    
+};
+int main()
+{
+    bst obj;
+    int ch;
+    do{
+    cout<<"1.Insert.\n2.Search.\n3.Preorder.\n4.postorder.\n5.inorder."<<endl;
+    cout<<"Enter the choice : "<<endl;
+    cin>>ch;
+    
+    switch(ch){
+        case 1:
+        int data;
+        cout<<"Enter the Element to be inserted : "<<endl;
+        cin>>data;
+        obj.insertnode(data);
+        break;
+        
+        case 2:
+        int srch;
+        cout<<"Enter the Element to be searched : "<<endl;
+        cin>>srch;
+        obj.search(srch);
+        break;
+        
+        case 3:
+        cout<<"Preorder : "<<endl;
+        obj.preorder(obj.rootnode);
+        break;
+        
+        case 4:
+        cout<<"Postorder : "<<endl;
+        obj.postorder(obj.rootnode);
+        break;
+        
+        case 5:
+        cout<<"Inorder : "<<endl;
+        obj.inorder(obj.rootnode);
+        break;
+        
+    }
+    }while(ch!=6);
+    return 0;
+}
